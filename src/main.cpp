@@ -29,6 +29,8 @@ static std::optional<std::vector<std::byte>> ReadFile(const std::string &path)
 
 int main(int argc, const char **argv)
 {    
+    float init_point[2];
+    float goal[2];
     std::string osm_data_file = "";
     if( argc > 1 ) {
         for( int i = 1; i < argc; ++i )
@@ -58,9 +60,16 @@ int main(int argc, const char **argv)
 
     // Build Model.
     RouteModel model{osm_data};
-
+    std::cout << "enter start point coordinate:\n" <<"x = " ;
+    std::cin >> init_point[0] ;
+    std::cout <<"y = ";
+    std::cin >> init_point[1];
+    std::cout << "enter end point coordinate:\n" <<"x = ";
+    std::cin >> goal[0];
+    std::cout <<"y = ";
+    std::cin >> goal[1];
     // Create RoutePlanner object and perform A* search.
-    RoutePlanner route_planner{model, 10, 10, 90, 90};
+    RoutePlanner route_planner{model, init_point[0], init_point[1], goal[0], goal[1]};
     route_planner.AStarSearch();
 
     std::cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
